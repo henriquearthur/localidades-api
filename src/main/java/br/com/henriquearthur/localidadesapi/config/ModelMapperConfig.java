@@ -1,4 +1,4 @@
-package br.com.henriquearthur.localidadesapi.config.modelmapper;
+package br.com.henriquearthur.localidadesapi.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

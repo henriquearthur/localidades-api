@@ -1,6 +1,10 @@
 ibge:
   api:
     url: https://servicodados.ibge.gov.br/api/v1
+correios:
+  api:
+    url: https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente
+    soapAction: http://cliente.bean.master.sigep.bsb.correios.com.br/AtendeCliente/consultaCEP
 
 spring:
   h2:
