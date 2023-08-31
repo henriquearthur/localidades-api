@@ -1,9 +1,9 @@
 package br.com.henriquearthur.localidadesapi.features.endereco.service;
 
+import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.endereco.dto.EnderecoDTO;
 import br.com.henriquearthur.localidadesapi.features.endereco.entity.Endereco;
 import br.com.henriquearthur.localidadesapi.features.endereco.repository.EnderecoRepository;
-import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;

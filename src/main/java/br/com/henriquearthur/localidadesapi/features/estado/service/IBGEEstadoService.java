@@ -1,9 +1,9 @@
 package br.com.henriquearthur.localidadesapi.features.estado.service;
 
+import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.estado.dto.EstadoDTO;
 import br.com.henriquearthur.localidadesapi.features.estado.ibge.client.IBGEEstadoClient;
 import br.com.henriquearthur.localidadesapi.features.estado.ibge.model.IBGEEstado;
-import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

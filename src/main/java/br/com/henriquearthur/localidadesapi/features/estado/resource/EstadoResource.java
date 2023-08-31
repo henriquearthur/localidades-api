@@ -1,8 +1,8 @@
 package br.com.henriquearthur.localidadesapi.features.estado.resource;
 
+import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.estado.dto.EstadoDTO;
 import br.com.henriquearthur.localidadesapi.features.estado.service.EstadoService;
-import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

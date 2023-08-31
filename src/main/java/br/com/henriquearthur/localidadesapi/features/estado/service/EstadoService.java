@@ -1,8 +1,8 @@
 package br.com.henriquearthur.localidadesapi.features.estado.service;
 
+import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.estado.dto.EstadoDTO;
 import br.com.henriquearthur.localidadesapi.features.estado.entity.Estado;
-import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

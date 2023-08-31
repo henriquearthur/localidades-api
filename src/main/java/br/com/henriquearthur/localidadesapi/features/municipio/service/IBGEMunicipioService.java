@@ -1,9 +1,9 @@
 package br.com.henriquearthur.localidadesapi.features.municipio.service;
 
+import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.estado.dto.EstadoDTO;
 import br.com.henriquearthur.localidadesapi.features.estado.dto.RegiaoEstadoDTO;
 import br.com.henriquearthur.localidadesapi.features.estado.ibge.model.IBGEEstado;
-import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.municipio.dto.MunicipioDTO;
 import br.com.henriquearthur.localidadesapi.features.municipio.ibge.client.IBGEMunicipioClient;
 import br.com.henriquearthur.localidadesapi.features.municipio.ibge.model.IBGEMunicipio;
