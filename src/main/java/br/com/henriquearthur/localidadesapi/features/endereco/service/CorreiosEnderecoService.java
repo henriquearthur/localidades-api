@@ -4,6 +4,7 @@ import br.com.henriquearthur.localidadesapi.exception.APIRequestException;
 import br.com.henriquearthur.localidadesapi.features.endereco.correios.client.CorreiosClient;
 import br.com.henriquearthur.localidadesapi.features.endereco.correios.model.CorreiosEndereco;
 import br.com.henriquearthur.localidadesapi.features.endereco.dto.EnderecoDTO;
+import feign.FeignException;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.soap.MessageFactory;
 import jakarta.xml.soap.SOAPMessage;
@@ -33,7 +34,15 @@ public class CorreiosEnderecoService {
 
         try {
             responseBody = correiosClient.getEndereco(createRequestBody(cep)).getBody();
-        } catch (Exception e) {
+        } catch (FeignException e) {
+            if (e.contentUTF8().toUpperCase().contains("CEP INVÁLIDO")) {
+                throw new APIRequestException(HttpStatus.BAD_REQUEST, "CEP inválido");
+            }
+
+            if (e.contentUTF8().toUpperCase().contains("CEP NAO ENCONTRADO")) {
+                throw new APIRequestException(HttpStatus.NOT_FOUND, "Endereço não encontrado");
+            }
+
             log.warn("Erro ao buscar endereço de CEP {} nos Correios", cep, e);
             throw new APIRequestException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao buscar endereço nos Correios");
         }
@@ -51,10 +60,7 @@ public class CorreiosEnderecoService {
     }
 
     private String createRequestBody(String cep) {
-        return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\""
-                + " xmlns:cli=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">" + "<soapenv:Header/>"
-                + "<soapenv:Body>" + "<cli:consultaCEP>" + "<cep>" + cep + "</cep>" + "</cli:consultaCEP>"
-                + "</soapenv:Body>" + "</soapenv:Envelope>";
+        return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"" + " xmlns:cli=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">" + "<soapenv:Header/>" + "<soapenv:Body>" + "<cli:consultaCEP>" + "<cep>" + cep + "</cep>" + "</cli:consultaCEP>" + "</soapenv:Body>" + "</soapenv:Envelope>";
     }
 
     private CorreiosEndereco convertSOAPMessageToCorreiosEndereco(SOAPMessage message) throws APIRequestException {
@@ -62,8 +68,7 @@ public class CorreiosEnderecoService {
             var jaxbContext = JAXBContext.newInstance(CorreiosEndereco.class);
             var unmarshaller = jaxbContext.createUnmarshaller();
 
-            return (CorreiosEndereco)
-                    unmarshaller.unmarshal(message.getSOAPBody().getElementsByTagName("return").item(0));
+            return (CorreiosEndereco) unmarshaller.unmarshal(message.getSOAPBody().getElementsByTagName("return").item(0));
         } catch (Exception e) {
             log.error("Erro ao converter SOAPMessage para CorreiosEndereco", e);
             throw new APIRequestException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao converter resposta dos Correios");
