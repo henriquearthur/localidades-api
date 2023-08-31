@@ -1,10 +1,13 @@
 package br.com.henriquearthur.localidadesapi.estado.entity;
 
+import br.com.henriquearthur.localidadesapi.municipio.entity.Municipio;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "TAB_ESTADO")
@@ -25,4 +28,7 @@ public class Estado {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private RegiaoEstado regiao;
+
+    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL)
+    private List<Municipio> municipios;
 }

@@ -30,7 +30,7 @@ public class IBGEEstadoService {
 
             if (estadosIBGE == null) {
                 log.error("Erro ao buscar estados no IBGE - resposta vazia");
-                throw new APIRequestException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao estados países no IBGE - resposta vazia");
+                throw new APIRequestException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro ao buscar estados no IBGE - resposta vazia");
             }
 
             return estadosIBGE.stream().map(this::convertIBGEEstadoToDTO).toList();
