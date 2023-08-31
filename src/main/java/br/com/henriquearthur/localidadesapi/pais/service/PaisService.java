@@ -19,16 +19,30 @@ public class PaisService {
         this.localPaisService = localPaisService;
     }
 
-    public List<PaisDTO> getPaises() throws APIRequestException {
-        List<PaisDTO> paisesIBGE = ibgePaisService.getPaises();
-        List<Pais> paises = localPaisService.savePaises(paisesIBGE);
+    public List<PaisDTO> getPaises() {
+        List<Pais> paises;
+
+        try {
+            List<PaisDTO> paisesIBGE = ibgePaisService.getPaises();
+            paises = localPaisService.savePaises(paisesIBGE);
+        } catch (Exception e) {
+            log.warn("Erro ao buscar e salvar países da API do IBGE. Buscando países no banco de dados local.", e);
+            paises = localPaisService.getPaises();
+        }
 
         return paises.stream().map(localPaisService::convertEntityToDTO).toList();
     }
 
     public PaisDTO getPais(String codigo) throws APIRequestException {
-        PaisDTO paisIBGE = ibgePaisService.getPais(codigo);
-        Pais pais = localPaisService.savePais(paisIBGE);
+        Pais pais;
+
+        try {
+            PaisDTO paisIBGE = ibgePaisService.getPais(codigo);
+            pais = localPaisService.savePais(paisIBGE);
+        } catch (Exception e) {
+            log.warn("Erro ao buscar e salvar país {} da API do IBGE. Buscando país no banco de dados local.", codigo, e);
+            pais = localPaisService.getPais(codigo);
+        }
 
         return localPaisService.convertEntityToDTO(pais);
     }
