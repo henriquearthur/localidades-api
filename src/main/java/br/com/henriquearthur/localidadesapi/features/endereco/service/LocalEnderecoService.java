@@ -42,4 +42,8 @@ public class LocalEnderecoService {
     private Endereco convertDTOToEntity(EnderecoDTO dto) {
         return modelMapper.map(dto, Endereco.class);
     }
+
+    public EnderecoDTO convertEntityToDTO(Endereco endereco) {
+        return modelMapper.map(endereco, EnderecoDTO.class);
+    }
 }
